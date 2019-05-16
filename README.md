@@ -1,2 +1,2 @@
-# KotlinPlayground
-A playground to play with Kotlin
+# JVM Playground
+A playground to play with JVM languages like Java and Kotlin
