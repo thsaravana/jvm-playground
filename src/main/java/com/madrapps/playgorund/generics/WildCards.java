@@ -1,4 +1,4 @@
-package generics;
+package com.madrapps.playgorund.generics;
 
 import java.util.ArrayList;
 import java.util.List;
