@@ -13,6 +13,11 @@ fun main() = runBlocking {
 
     // Cooperative cancellation using yield()
     yieldCancellation()
+    println("\n\n")
+
+    // Finally while cancellation
+    finallyCancellation()
+    println("\n\n")
 }
 
 private suspend fun jobCancellation() = coroutineScope {
@@ -57,4 +62,28 @@ private suspend fun yieldCancellation() = coroutineScope {
     println("Yield: Cancel now")
     job.cancelAndJoin()
     println("Yield: Cancelled")
+}
+
+private suspend fun finallyCancellation() = coroutineScope {
+    val job = launch {
+        try {
+            repeat(100) {
+                println("Finally: Printing $it")
+                delay(500L)
+            }
+        } finally {
+            withContext(NonCancellable) {
+                println("Finally: Final non cancellable block start")
+                delay(1000L)
+                println("Finally: Final non cancellable block end")
+            }
+            println("Finally: Final block start")
+            delay(1000L)
+            println("Finally: Final block end")
+        }
+    }
+    delay(1800L)
+    println("Finally: Cancel now")
+    job.cancelAndJoin()
+    println("Finally: Cancelled")
 }
